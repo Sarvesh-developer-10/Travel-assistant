@@ -156,6 +156,44 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+<style>
+
+/* Make question labels visible */
+.stTextInput label,
+.stNumberInput label,
+.stSelectbox label,
+.stRadio label,
+.stTextArea label,
+.stDateInput label {
+    color: #FFFFFF !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    text-shadow: 1px 2px 5px rgba(0, 0, 0, 1) !important;
+}
+
+/* Improve widget labels */
+div[data-testid="stWidgetLabel"] p {
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+    text-shadow: 1px 2px 5px #000000 !important;
+}
+
+/* Radio options */
+.stRadio div[role="radiogroup"] label p {
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+}
+
+/* Caption */
+[data-testid="stCaptionContainer"] p {
+    color: #FFFFFF !important;
+    text-shadow: 1px 2px 4px #000000 !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
 
 st.caption("This is a travel assistant that helps you plan your trips and find the best destinations.")
 
