@@ -8,7 +8,7 @@ import base64
 st.set_page_config(
     page_title="Sarvesh App",  # Changes the browser tab title
     page_icon="🚀",  # Changes the tab icon (can be an emoji or a file path to an image)
-    layout="wide",  # Optional: sets page layout to wide
+   # layout="wide",  # Optional: sets page layout to wide
 )
 
 
