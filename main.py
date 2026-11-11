@@ -5,6 +5,13 @@ import streamlit as st
 import os
 import base64
 
+st.set_page_config(
+    page_title="Sarvesh App",  # Changes the browser tab title
+    page_icon="🚀",  # Changes the tab icon (can be an emoji or a file path to an image)
+    layout="wide",  # Optional: sets page layout to wide
+)
+
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 image_path = os.path.join(BASE_DIR, "travel_bg.png")
