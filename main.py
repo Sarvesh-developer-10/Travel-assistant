@@ -11,6 +11,18 @@ st.set_page_config(
    # layout="wide",  # Optional: sets page layout to wide
 )
 
+st.markdown("""
+<style>
+.st-key-result_card {
+    background: rgba(255, 255, 255, 0.94);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+}
+.st-key-result_card * {
+    color: #1a1a1a !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -209,16 +221,43 @@ he is on a {budget} budget and he is travelling with {travel_type}
 and has interests in {intrest}
 and share answer in bullet format"""
 
+def extract_text(interaction):
+    if getattr(interaction, "output_text", None):
+        return interaction.output_text
+    for attr in ("outputs", "output", "steps"):
+        items = getattr(interaction, attr, None)
+        if not items:
+            continue
+        texts = []
+        for item in items:
+            t = getattr(item, "text", None)
+            if t:
+                texts.append(t)
+            for c in getattr(item, "content", None) or []:
+                ct = getattr(c, "text", None)
+                if ct:
+                    texts.append(ct)
+        if texts:
+            return "\n\n".join(texts)
+    return None
+
 if st.button("plan my trip"):
-    interaction = client.interactions.create(
-     model="gemini-3.5-flash-lite",
-    input=prompt,
-     system_instruction="You are an experienced travel planner.",
-    stream=True,
-    generation_config={"temperature": 0.7,
-                          "top_K": 20,
-                          "max output tokens": 400},)
-    with st.spinner("Wait for a sec..", show_time =True):
-        time.sleep(5)
-    st.success("Here are some fantastic suggestions ")
-    st.write(interaction.output_text)
+    with st.spinner("Wait for a sec..", show_time=True):
+        interaction = client.interactions.create(
+            model="gemini-3.5-flash-lite",
+            input=prompt,
+            system_instruction="You are an experienced travel planner. ...",
+            generation_config={
+                "temperature": 0.7,
+                "max_output_tokens": 1000,
+            },
+        )
+
+    with st.container(key="result_card"):
+        st.success("Here are some fantastic suggestions")
+        text = extract_text(interaction)
+        if text:
+            st.write(text)
+        else:
+            st.warning("Couldn't find the text field. Raw response below:")
+            st.write(interaction)
