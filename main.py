@@ -64,7 +64,7 @@ st.markdown("""
 ">
 
 <h1 style="font-size: 45px; margin-bottom: 5px;">
-✈️ Travel Buddy
+✈️ Tripmint
 </h1>
 
 <p style="font-size: 22px; margin-top: 5px;">
